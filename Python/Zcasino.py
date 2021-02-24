@@ -64,4 +64,4 @@ if __name__ == "__main__":
         if playerWallet > 0:
             playAgain = int(input("Keep playing? (1=yes 0=no)"))
         else:
-            print("GAME OVER! Don't gamble too much.")
+            print("GAME OVER! No money, no gamble.")
