@@ -2,7 +2,6 @@
 # MOOC: https://openclassrooms.com/fr/courses/235344-apprenez-a-programmer-en-python/
 # URL: ./231735-tp-tous-au-zcasino
 
-# To do: integer input checker + loop until valid input value
 
 from random import randrange
 from math import ceil
