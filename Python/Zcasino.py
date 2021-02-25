@@ -15,7 +15,7 @@ def welcomemsg(wallet):
 
 def inputchecker(stringinput, minimum, maximum):
     # Convert numbers in string format to int format
-    # Number has to be in range ]minimum;maximum[
+    # Number has to be in range [minimum;maximum]
     # Function returns 0 if invalid input
     result = 0
     validinput = 1
