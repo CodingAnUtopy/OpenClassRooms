@@ -18,18 +18,17 @@ def inputchecker(stringinput, minimum, maximum):
     # Number has to be in range [minimum;maximum]
     # Function returns 0 if invalid input
     result = 0
-    validinput = 1
+    validinput = 0
     try:
         result = int(stringinput)
         assert minimum <= result <= maximum
+        validinput = 1
         return validinput, result
     except AssertionError:
-        print("Number not in range. It should be in range [{0};{1}]".format(minimum, maximum))
-        validinput = 0
+        print("Number should be in range [{0};{1}]".format(minimum, maximum))
         return validinput, result
     except ValueError:
         print("Invalid input.")
-        validinput = 0
         return validinput, result
 
 
