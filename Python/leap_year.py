@@ -19,5 +19,5 @@ if __name__ == "__main__":
             print("It is a leap year.")
         else:
             print("It is not a leap year.")
-    except:
-        print("Something went wrong.")
+    except ValueError:
+        print("Invalid input.")
