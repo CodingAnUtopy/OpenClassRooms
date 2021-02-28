@@ -46,17 +46,17 @@ def pick_a_word(wordslist):
 def load_scores(player):
     try:
         path = config.SCORES_PATH
-        new_file = 0
-        if not os.path.isfile(path):
+        file_exist = os.path.isfile(path)
+        if not file_exist:
             save_scores({player: 0})
-            new_file = 1
         with open(path, "rb") as myfile:
             my_depickler = pickle.Unpickler(myfile)
             result = my_depickler.load()
             if player not in result:  # Create the key for new players and set score = 0
+                print("Player {0} not found in scores.")
                 result[player] = 0
-            if new_file:
-                print("New scores file generated.")
+            if not file_exist:
+                print("New scores file has been generated.")
             else:
                 print("Scores loaded successfully.")
             return result
@@ -96,6 +96,7 @@ def welcome_msg(player, scores):
 # Output : updated list of played letters as list
 # Each time a new list is created based on the input :
 #   TODO - force manual destruction of input list <playedletters> each time function is called
+#   TODO - returns the turns_counter : +1 if the (valid)letter is not in the mystery word
 def play_a_letter(playedletters):
     if isinstance(playedletters, list):
         result = list(playedletters)
@@ -121,7 +122,7 @@ def play_a_letter(playedletters):
 # Output: none
 def print_gui(player, scores, word_toguess, playedletters, turnscounter):
     print()
-    print("[ Player name: {0} - {1} ]".format(player, scores[player]))
+    print("[ Player name: {0} - Player score: {1} ]".format(player, scores[player]))
     print("[ Turn n°{0} of {1} ]".format(turnscounter, config.MAXIMUM_TURNS_PER_ROUND))
     mystery_word = "[ Word to guess: "
     for letter in word_toguess:
