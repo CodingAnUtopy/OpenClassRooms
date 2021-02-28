@@ -92,8 +92,8 @@ def welcome_msg(player, scores):
 
 
 # Function play_a_letter()
-# Input : list of played letters as list
-# Output : updated list of played letters as list
+# Input : list of played letters as list, the mystery word as string
+# Output : turn counter increment as int, an updated list of played letters as list
 # Each time a new list is created based on the input :
 def play_a_letter(playedletters, word):
     if isinstance(playedletters, list):
