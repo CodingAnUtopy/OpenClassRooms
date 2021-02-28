@@ -22,7 +22,7 @@ def load_dictionary(path):
             for word in words_list:
                 if word.isalpha() and len(word) == wordlen:  # only letters
                     result.append(word.upper())  # add words in capital letters to result list
-            print("Dictionary loaded successfully. {0} word(s).".format(len(result)))
+            print("Dictionary file loaded successfully. {0} word(s) of {1} letter(s).".format(len(result), wordlen))
             return result
     except:
         print("Error: dictionary could not be loaded.")
@@ -53,15 +53,15 @@ def load_scores(player):
             my_depickler = pickle.Unpickler(myfile)
             result = my_depickler.load()
             if player not in result:  # Create the key for new players and set score = 0
-                print("Player {0} not found in scores.")
+                print("Player {0} not found in scores.".format(player))
                 result[player] = 0
             if not file_exist:
                 print("New scores file has been generated.")
             else:
-                print("Scores loaded successfully.")
+                print("Scores file loaded successfully.")
             return result
     except:
-        print("Error: could not load scores.")
+        print("Error: could not load scores file.")
         return {}
 
 
@@ -74,9 +74,9 @@ def save_scores(scores_dictionary):
         with open(path, "wb") as myfile:
             my_pickler = pickle.Pickler(myfile)
             my_pickler.dump(scores_dictionary)
-            print("Scores saved successfully.")
+            print("Scores file saved successfully.")
     except:
-        print("Error: could not save scores.")
+        print("Error: could not save scores file.")
 
 
 # Function  print_scores()
@@ -95,14 +95,14 @@ def welcome_msg(player, scores):
 # Input : list of played letters as list
 # Output : updated list of played letters as list
 # Each time a new list is created based on the input :
-#   TODO - force manual destruction of input list <playedletters> each time function is called
-#   TODO - returns the turns_counter : +1 if the (valid)letter is not in the mystery word
-def play_a_letter(playedletters):
+def play_a_letter(playedletters, word):
     if isinstance(playedletters, list):
         result = list(playedletters)
+        del playedletters
     else:
         result = []
     letter_isvalid = 0
+    letter = ""
     while letter_isvalid == 0:  # loop until a valid letter is played
         letter = input("Play a letter: ")
         letter = letter.upper()
@@ -114,7 +114,12 @@ def play_a_letter(playedletters):
             print("You played the letter {0}.".format(letter))
         else:  # letter is not valid
             print("Invalid input.")
-    return result
+
+    is_letter_found = letter in word
+    if is_letter_found:
+        return 0, result  # If player guessed a letter of the mystery word, the counter won't increase
+    else:
+        return 1, result
 
 
 # Function print_gui()
@@ -123,7 +128,8 @@ def play_a_letter(playedletters):
 def print_gui(player, scores, word_toguess, playedletters, turnscounter):
     print()
     print("[ Player name: {0} - Player score: {1} ]".format(player, scores[player]))
-    print("[ Turn n°{0} of {1} ]".format(turnscounter, config.MAXIMUM_TURNS_PER_ROUND))
+    print("[ You got {0} chance(s) left.]".format(config.MAXIMUM_TURNS_PER_ROUND - turnscounter))
+    print("[ Letter(s) played: {0} ]".format(playedletters))
     mystery_word = "[ Word to guess: "
     for letter in word_toguess:
         if letter in playedletters:

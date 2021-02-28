@@ -20,8 +20,8 @@ while keep_playing == 1:
     functions.welcome_msg(player, scores)
 
     while turns_counter < config.MAXIMUM_TURNS_PER_ROUND:
-        playedletters = functions.play_a_letter(playedletters)
-        turns_counter += 1
+        counter_increment, playedletters = functions.play_a_letter(playedletters, word)
+        turns_counter += counter_increment
         functions.print_gui(player, scores, word, playedletters, turns_counter)
 
     scores[player] += config.MAXIMUM_TURNS_PER_ROUND - turns_counter
